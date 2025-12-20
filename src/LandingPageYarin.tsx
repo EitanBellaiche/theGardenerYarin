@@ -9,6 +9,10 @@ import imgRooftop from "./assets/yarin/rooftop.jpeg";
 import imgBigTree from "./assets/yarin/big-tree.jpeg";
 import imgYardStepping from "./assets/yarin/yard-stepping.jpeg";
 
+// ✅ לוגו: שים קובץ כאן: src/assets/yarin/logo.png
+// אם זה jpeg אז תשנה ל: "./assets/yarin/logo.jpeg"
+import logoImg from "./assets/yarin/logo.jpeg";
+
 const PHONE_INT = "+972527090776";
 const PHONE_LOCAL = "052-7090776";
 
@@ -19,11 +23,21 @@ const WHATSAPP_TEXT = encodeURIComponent(
 const WHATSAPP = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_TEXT}`;
 
 const SOCIALS = {
-  instagram: "https://www.instagram.com/yarin_adler_gardening?igsh=dHR4NHJrZTVxamc3",
-  facebook: "https://www.facebook.com/share/1HRqKQyGcX/?mibextid=wwXIfr",
+  instagram:
+    "https://www.instagram.com/yarin_adler_gardening?igsh=dHR4NHJrZTVxamc3",
+  facebook:
+    "https://www.facebook.com/share/1HRqKQyGcX/?mibextid=wwXIfr",
 };
 
-type IconName = "spark" | "leaf" | "water" | "tool" | "phone" | "menu" | "close" | "whatsapp";
+type IconName =
+  | "spark"
+  | "leaf"
+  | "water"
+  | "tool"
+  | "phone"
+  | "menu"
+  | "close"
+  | "whatsapp";
 type GalleryItem = { cat: string; src: string; title: string; tag: string };
 type ServiceItem = { icon: IconName; title: string; desc: string };
 type ReviewItem = { name: string; text: string };
@@ -113,8 +127,14 @@ function scrollToId(id: string) {
   el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-// Reveal-on-scroll component (effects)
-function Reveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+// Reveal-on-scroll component
+function Reveal({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [inView, setInView] = useState(false);
 
@@ -127,7 +147,7 @@ function Reveal({ children, className = "" }: { children: React.ReactNode; class
         entries.forEach((e) => {
           if (e.isIntersecting) {
             setInView(true);
-            obs.disconnect(); // פעם אחת וזהו (חלק + יעיל)
+            obs.disconnect();
           }
         });
       },
@@ -139,7 +159,10 @@ function Reveal({ children, className = "" }: { children: React.ReactNode; class
   }, []);
 
   return (
-    <div ref={ref} className={`reveal ${inView ? "revealIn" : ""} ${className}`.trim()}>
+    <div
+      ref={ref}
+      className={`reveal ${inView ? "revealIn" : ""} ${className}`.trim()}
+    >
       {children}
     </div>
   );
@@ -220,11 +243,36 @@ export default function LandingPageYarin() {
 
   const galleryItems: GalleryItem[] = useMemo(
     () => [
-      { cat: "רופטופ", src: imgRooftop, title: "רופטופ פרימיום", tag: "דשא סינטטי נקי + אווירה" },
-      { cat: "עיקולים", src: imgCurveHouse, title: "עיקולים מושלמים", tag: "גימור צמוד לקיר / קווים נקיים" },
-      { cat: "דקור", src: imgSmallIsland, title: "אי דשא בתוך חיפוי", tag: "מסגרת אבנים + נראות מטופחת" },
-      { cat: "חצרות", src: imgBigTree, title: "חצר גדולה ומרווחת", tag: "מראה טבעי ומסודר" },
-      { cat: "דקור", src: imgYardStepping, title: "שביל דריכה", tag: "עיצוב + שימושיות" },
+      {
+        cat: "רופטופ",
+        src: imgRooftop,
+        title: "רופטופ פרימיום",
+        tag: "דשא סינטטי נקי + אווירה",
+      },
+      {
+        cat: "עיקולים",
+        src: imgCurveHouse,
+        title: "עיקולים מושלמים",
+        tag: "גימור צמוד לקיר / קווים נקיים",
+      },
+      {
+        cat: "דקור",
+        src: imgSmallIsland,
+        title: "אי דשא בתוך חיפוי",
+        tag: "מסגרת אבנים + נראות מטופחת",
+      },
+      {
+        cat: "חצרות",
+        src: imgBigTree,
+        title: "חצר גדולה ומרווחת",
+        tag: "מראה טבעי ומסודר",
+      },
+      {
+        cat: "דקור",
+        src: imgYardStepping,
+        title: "שביל דריכה",
+        tag: "עיצוב + שימושיות",
+      },
     ],
     []
   );
@@ -263,7 +311,6 @@ export default function LandingPageYarin() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   useEffect(() => {
-    // נועל גלילה כשמובייל נב פתוח
     document.body.style.overflow = mobileNavOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
@@ -303,14 +350,14 @@ export default function LandingPageYarin() {
               go("top");
             }}
           >
-            <div className="brandMark" aria-hidden />
+            {/* ✅ הלוגו במקום הריבוע */}
+            <img className="brandLogo" src={logoImg} alt="ירין אדלר – גינון" />
             <div className="brandText">
               <b>ירין אדלר – גינון</b>
               <span>נהריה והסביבה • דשא סינטטי • תחזוקה • השקיה</span>
             </div>
           </a>
 
-          {/* Desktop nav */}
           <div className="nav desktopNav">
             <button className="btn btnGhost" type="button" onClick={() => go("services")}>
               שירותים
@@ -323,13 +370,11 @@ export default function LandingPageYarin() {
             </button>
           </div>
 
-          {/* Mobile menu button */}
           <button className="btn btnGhost mobileMenuBtn" type="button" onClick={() => setMobileNavOpen(true)}>
             <Icon name="menu" /> תפריט
           </button>
         </div>
 
-        {/* Mobile drawer */}
         {mobileNavOpen && (
           <div className="mobileNavBackdrop" onClick={() => setMobileNavOpen(false)} role="dialog" aria-modal="true">
             <div className="mobileNavSheet" onClick={(e) => e.stopPropagation()}>
@@ -401,8 +446,8 @@ export default function LandingPageYarin() {
 
               <Reveal className="delay1">
                 <p className="sub">
-                  התקנה נקייה, חיתוכים ועיקולים מדויקים, שילוב חיפויים ועיצוב לפי השטח. שולחים תמונה בוואטסאפ
-                  ומקבלים מענה מהיר.
+                  התקנה נקייה, חיתוכים ועיקולים מדויקים, שילוב חיפויים ועיצוב לפי השטח.
+                  שולחים תמונה בוואטסאפ ומקבלים מענה מהיר.
                 </p>
               </Reveal>
 
@@ -450,9 +495,7 @@ export default function LandingPageYarin() {
                     { title: "ניקיון ופינוי בסוף עבודה", desc: "משאירים מסודר — שקט בראש, גינה יפה בעיניים." },
                   ].map((b) => (
                     <div key={b.title} className="bullet">
-                      <div className="check" aria-hidden>
-                        ✓
-                      </div>
+                      <div className="check" aria-hidden>✓</div>
                       <div>
                         <b>{b.title}</b>
                         <div className="bulletDesc">{b.desc}</div>
@@ -571,9 +614,7 @@ export default function LandingPageYarin() {
                     { n: "3", t: "ביצוע נקי ומדויק", d: "עבודה מסודרת, גימור מקצועי ופינוי בסוף." },
                   ].map((s) => (
                     <div key={s.n} className="step">
-                      <div className="stepNum" aria-hidden>
-                        {s.n}
-                      </div>
+                      <div className="stepNum" aria-hidden>{s.n}</div>
                       <div>
                         <b>{s.t}</b>
                         <div className="small">{s.d}</div>
@@ -677,27 +718,19 @@ export default function LandingPageYarin() {
         <div className="container footerInner">
           <div>© {new Date().getFullYear()} ירין אדלר — גינון בנהריה והסביבה</div>
           <div className="footerLinks">
-            <a href={WHATSAPP} target="_blank" rel="noreferrer">
-              וואטסאפ
-            </a>
+            <a href={WHATSAPP} target="_blank" rel="noreferrer">וואטסאפ</a>
             <a href={`tel:${PHONE_INT}`}>{PHONE_LOCAL}</a>
-            <a href={SOCIALS.instagram} target="_blank" rel="noreferrer">
-              אינסטגרם
-            </a>
-            <a href={SOCIALS.facebook} target="_blank" rel="noreferrer">
-              פייסבוק
-            </a>
+            <a href={SOCIALS.instagram} target="_blank" rel="noreferrer">אינסטגרם</a>
+            <a href={SOCIALS.facebook} target="_blank" rel="noreferrer">פייסבוק</a>
           </div>
         </div>
       </footer>
 
-      {/* WhatsApp floating button */}
       <a className="waFloat" href={WHATSAPP} target="_blank" rel="noreferrer" aria-label="שלח הודעה בוואטסאפ">
         <span className="waPulse" aria-hidden />
         <Icon name="whatsapp" />
       </a>
 
-      {/* Sticky CTA (especially for phone) */}
       <div className="stickyCta">
         <div className="stickyCtaInner">
           <a className="btn btnPrimary" href={WHATSAPP} target="_blank" rel="noreferrer">
