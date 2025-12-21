@@ -646,7 +646,6 @@ export default function LandingPageYarin() {
                   ))}
                 </div>
                 <div className="small" style={{ marginTop: 10 }}>
-                  * אפשר להחליף לביקורות אמיתיות.
                 </div>
               </div>
             </Reveal>
