@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://thegardeneryarin.onrender.com/sitemap.xml
