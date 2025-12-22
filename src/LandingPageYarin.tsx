@@ -440,7 +440,7 @@ export default function LandingPageYarin() {
             <div>
               <Reveal>
                 <h1 className="h1">
-                  דשא סינטטי <span className="accent">פרימיום</span> וגינון מקצועי — תוצאה שנראית “וואו”.
+                  דשא סינטטי <span className="accent">פרימיום</span> וגינון מקצועי - תוצאה שנראית “וואו”.
                 </h1>
               </Reveal>
 
@@ -715,7 +715,7 @@ export default function LandingPageYarin() {
 
       <footer className="footer">
         <div className="container footerInner">
-          <div>© {new Date().getFullYear()} ירין אדלר — גינון בנהריה והסביבה</div>
+          <div>© {new Date().getFullYear()} ירין אדלר - גינון בנהריה והסביבה</div>
           <div className="footerLinks">
             <a href={WHATSAPP} target="_blank" rel="noreferrer">וואטסאפ</a>
             <a href={`tel:${PHONE_INT}`}>{PHONE_LOCAL}</a>
