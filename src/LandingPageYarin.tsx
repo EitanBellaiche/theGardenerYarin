@@ -40,9 +40,43 @@ type GalleryItem = {
   src: string;
   title: string;
   tag: string;
+  alt: string;
 };
 
 type IntentItem = { id: string; label: string; template: string };
+
+type SeoSection = {
+  title: string;
+  body: string;
+};
+
+type FaqItem = {
+  question: string;
+  answer: string;
+};
+
+type InternalLink = {
+  href: string;
+  label: string;
+};
+
+type PageKey =
+  | "home"
+  | "ganan-nahariya"
+  | "ginun-nahariya"
+  | "synthetic-grass-nahariya"
+  | "garden-maintenance-nahariya"
+  | "ganan-north";
+
+type PageContent = {
+  key: PageKey;
+  path: string;
+  eyebrow: string;
+  h1: string;
+  intro: string;
+  secondaryIntro: string;
+  sections: SeoSection[];
+};
 
 const GALLERY_ITEMS: GalleryItem[] = [
   {
@@ -50,30 +84,35 @@ const GALLERY_ITEMS: GalleryItem[] = [
     src: imgRooftop,
     title: "רופטופ נקי ומדויק",
     tag: "דשא סינטטי פרימיום",
+    alt: "התקנת דשא סינטטי בנהריה על גג מרוצף",
   },
   {
     cat: "עיקולים",
     src: imgCurveHouse,
     title: "עיקולים שיושבים בול",
     tag: "חיבור מושלם לקירות",
+    alt: "שדרוג גינה עם דשא סינטטי בנהריה בקווים מעוגלים",
   },
   {
     cat: "דקור",
     src: imgSmallIsland,
     title: "אי דשא עם חיפוי",
     tag: "שילוב אבנים ודשא",
+    alt: "עבודת גינון בנהריה עם דשא סינטטי וחיפוי דקורטיבי",
   },
   {
     cat: "חצרות",
     src: imgBigTree,
     title: "חצר רחבה ומטופחת",
     tag: "מראה פתוח ונקי",
+    alt: "עבודת גינון בנהריה בחצר רחבה ומסודרת",
   },
   {
     cat: "שבילים",
     src: imgYardStepping,
     title: "שבילי דריכה",
     tag: "עיצוב ושימושיות",
+    alt: "שדרוג גינה בנהריה עם שבילי דריכה ודשא סינטטי",
   },
 ];
 
@@ -102,7 +141,233 @@ const INTENTS: IntentItem[] = [
   },
 ];
 
-const SERVICE_LABELS = ["דשא סינטטי", "השקיה", "תחזוקה", "גיזום", "חיפויים", "שבילי דריכה"];
+const FAQ_ITEMS: FaqItem[] = [
+  {
+    question: "האם אתם מבצעים עבודות גינון בנהריה?",
+    answer:
+      "כן. ירין אדלר גינון מבצע עבודות גינון בנהריה והסביבה, כולל שדרוג גינות, ניקוי, שתילות, גיזום וסידור חצרות.",
+  },
+  {
+    question: "האם אתם מתקינים דשא סינטטי?",
+    answer:
+      "כן. אנחנו מבצעים התקנת דשא סינטטי בנהריה ובאזור, עם הכנת שטח, גימור נקי והתאמה לגינות, גגות, חצרות ושבילים.",
+  },
+  {
+    question: "האם אפשר לקבל הצעת מחיר בוואטסאפ?",
+    answer:
+      "כן. אפשר לשלוח תמונות, מיקום ותיאור קצר בוואטסאפ ולקבל מענה מהיר והכוונה ראשונית לגבי העבודה.",
+  },
+  {
+    question: "האם אתם עושים תחזוקת גינות לבתים פרטיים ובניינים?",
+    answer:
+      "כן. אנחנו נותנים שירותי תחזוקת גינות, טיפול בהשקיה, גיזום, ניקיון ושדרוג גם לבתים פרטיים וגם לבניינים ועסקים.",
+  },
+  {
+    question: "באילו אזורים אתם עובדים?",
+    answer:
+      "אנחנו עובדים בעיקר בנהריה, בגליל המערבי ובאזור הצפון, ומגיעים גם לאזורים נוספים בכל הארץ לפי סוג העבודה והיקף הפרויקט.",
+  },
+  {
+    question: "האם אתם נותנים שירות גם למי שמחפש גנן בצפון?",
+    answer:
+      "כן. אם אתם מחפשים גנן בצפון, זה אזור הפעילות המרכזי של ירין אדלר גינון, אבל במידת הצורך אפשר לתת שירות גם באזורים נוספים בארץ.",
+  },
+];
+
+const INTERNAL_LINKS: InternalLink[] = [
+  { href: "/ganan-nahariya", label: "גנן בנהריה" },
+  { href: "/ginun-nahariya", label: "גינון בנהריה" },
+  { href: "/synthetic-grass-nahariya", label: "דשא סינטטי בנהריה" },
+  { href: "/garden-maintenance-nahariya", label: "תחזוקת גינות בנהריה" },
+  { href: "/ganan-north", label: "גנן בצפון" },
+];
+
+const PAGE_CONTENT: Record<PageKey, PageContent> = {
+  home: {
+    key: "home",
+    path: "/",
+    eyebrow: "גנן בנהריה והסביבה",
+    h1: "גנן בנהריה לעבודות גינון ודשא סינטטי",
+    intro:
+      "ירין אדלר גינון מבצע עבודות גינון בנהריה, התקנת דשא סינטטי, שדרוג חצרות, תחזוקת גינות, גיזום וטיפול בהשקיה עם גימור נקי ומענה מהיר.",
+    secondaryIntro:
+      "השירות ניתן בעיקר בנהריה, עכו, הקריות, שלומי, מעלות ואזור הצפון, עם הגעה גם לאזורים נוספים בכל הארץ לפי סוג העבודה.",
+    sections: [
+      {
+        title: "גינון בנהריה והסביבה",
+        body:
+          "אם אתם מחפשים גנן בנהריה לעבודות מסודרות, המטרה היא לא רק לבצע עבודה נקודתית אלא להשאיר גינה שנראית טוב גם אחרי שהעבודה נגמרת. השירות כולל שדרוג גינות, סידור חצרות, חיפויים, שבילי דריכה והתאמה לשטח הקיים.",
+      },
+      {
+        title: "התקנת דשא סינטטי בנהריה",
+        body:
+          "דשא סינטטי בנהריה מתאים לגינות פרטיות, חצרות, גגות ואזורים שרוצים בהם מראה נקי ונוח לתחזוקה. העבודה כוללת הכנת שטח, התאמת חיבורים וגימור מדויק כדי שהתוצאה תיראה טבעית ומסודרת.",
+      },
+      {
+        title: "תחזוקת גינות, השקיה וגיזום",
+        body:
+          "מעבר להקמות ושדרוגים, אנחנו מבצעים תחזוקת גינות בנהריה, טיפול במערכות השקיה, תיקונים, גיזום וניקוי עשבייה. זה מתאים ללקוחות שרוצים לשמור על גינה מטופחת לאורך זמן בלי לאבד שליטה על המראה והתפקוד שלה.",
+      },
+      {
+        title: "למה לבחור בירין אדלר גינון",
+        body:
+          "הדגש הוא על עבודות אמיתיות, תקשורת ישירה, הגעה מסודרת וגימור נקי. במקום הבטחות כלליות, אפשר לראות דוגמאות לעבודות, לשלוח תמונות בוואטסאפ ולקבל כיוון מהיר לפי סוג השטח והצורך בפועל.",
+      },
+      {
+        title: "גנן בצפון עם דגש על נהריה והסביבה",
+        body:
+          "מי שמחפש גנן בצפון בדרך כלל צריך זמינות והיכרות אמיתית עם האזור. לכן הדגש הוא על נהריה, עכו, הקריות, שלומי, מעלות והסביבה, לצד אפשרות להגיע גם לעבודות מתאימות באזורים נוספים בארץ.",
+      },
+    ],
+  },
+  "ganan-nahariya": {
+    key: "ganan-nahariya",
+    path: "/ganan-nahariya",
+    eyebrow: "עמוד מידע מקומי",
+    h1: "גנן בנהריה לעבודות גינון, השקיה ודשא סינטטי",
+    intro:
+      "אם אתם מחפשים גנן בנהריה, ירין אדלר גינון מבצע עבודות מסודרות לבתים פרטיים, בניינים וחצרות עם דגש על תוצאה נקייה ושירות ישיר.",
+    secondaryIntro:
+      "העבודה כוללת שדרוג גינות, מערכות השקיה, תחזוקה, גיזום והתקנת דשא סינטטי בנהריה והסביבה.",
+    sections: [
+      {
+        title: "שירות גינון מקומי בנהריה",
+        body:
+          "כאשר מחפשים גנן בנהריה, חשוב לעבוד עם מי שמכיר את האזור ויודע לתת פתרון מהיר ומדויק. השירות מתאים לחצרות פרטיות, אזורי כניסה, גינות גג ושטחים משותפים.",
+      },
+      {
+        title: "עבודות גינון לפי הצורך בשטח",
+        body:
+          "לא כל גינה צריכה אותו פתרון. לפעמים מדובר בשדרוג חזותי עם דשא סינטטי וחיפויים, ולפעמים צריך תחזוקת גינות, השקיה, גיזום או ניקוי יסודי. המטרה היא להתאים את העבודה למה שבאמת צריך.",
+      },
+      {
+        title: "דרך נוחה לקבל הצעת מחיר",
+        body:
+          "אפשר לשלוח תמונות של השטח בוואטסאפ, לצרף מיקום ותיאור קצר, ולקבל כיוון ראשוני מהיר. כך אפשר להבין אם מדובר בעבודת גינון מלאה, תחזוקה שוטפת או התקנה נקודתית.",
+      },
+    ],
+  },
+  "ginun-nahariya": {
+    key: "ginun-nahariya",
+    path: "/ginun-nahariya",
+    eyebrow: "עמוד מידע מקומי",
+    h1: "גינון בנהריה לבתים פרטיים, בניינים וחצרות",
+    intro:
+      "שירותי גינון בנהריה צריכים להיות גם אסתטיים וגם פרקטיים. ירין אדלר גינון מבצע עבודות שמטרתן לשפר את המראה, השימושיות והתחזוקה של הגינה.",
+    secondaryIntro:
+      "זה כולל שדרוג חצרות, סידור שטח, חיפויים, שבילים, השקיה ופתרונות משלימים לפי מצב הגינה והתקציב.",
+    sections: [
+      {
+        title: "תכנון עבודה לפי מצב הגינה",
+        body:
+          "במקום פתרון גנרי, העבודה מתחילה מהבנת השטח: מה כבר קיים, מה מפריע, ומה אפשר לשדרג כדי לקבל גינה נעימה וקלה יותר לתחזוקה.",
+      },
+      {
+        title: "גינון בנהריה עם גימור נקי",
+        body:
+          "הדגש הוא על קווים מסודרים, שילוב חומרים נכון ועבודה שמשאירה את המקום מסודר ומוכן לשימוש. זה נכון גם לשדרוג קטן וגם לעבודה רחבה יותר.",
+      },
+      {
+        title: "שילוב עם תחזוקה והשקיה",
+        body:
+          "במקרים רבים כדאי לשלב את עבודת הגינון עם בדיקת השקיה, גיזום או הכנת אזורים לדשא סינטטי, כדי שהתוצאה תחזיק לאורך זמן ולא תדרוש תיקונים מיידיים.",
+      },
+    ],
+  },
+  "synthetic-grass-nahariya": {
+    key: "synthetic-grass-nahariya",
+    path: "/synthetic-grass-nahariya",
+    eyebrow: "עמוד מידע מקומי",
+    h1: "התקנת דשא סינטטי בנהריה עם גימור נקי",
+    intro:
+      "מחפשים דשא סינטטי בנהריה? ירין אדלר גינון מבצע התקנת דשא סינטטי לגינות, חצרות, גגות ואזורים דקורטיביים עם הכנת שטח וגימור מדויק.",
+    secondaryIntro:
+      "המטרה היא לקבל מראה מסודר, נעים לעין וקל יותר לתחזוקה, בלי לוותר על התאמה נכונה לשטח הקיים.",
+    sections: [
+      {
+        title: "מתי דשא סינטטי הוא פתרון נכון",
+        body:
+          "דשא סינטטי מתאים למי שרוצה אזור ירוק קבוע, גינה שנראית מסודרת לאורך השנה או פתרון נוח יותר לתחזוקה בחצרות פעילות ובגגות.",
+      },
+      {
+        title: "התקנה טובה מתחילה בתשתית",
+        body:
+          "ההבדל בין עבודה שנראית טוב לזמן קצר לבין תוצאה איכותית הוא בהכנת השטח, חיבורים מדויקים וגימור מסודר בקצוות, בעיקולים ובמפגשים עם ריצוף וקירות.",
+      },
+      {
+        title: "שילוב עם עבודות גינון נוספות",
+        body:
+          "לעיתים נכון לשלב את הדשא הסינטטי עם חיפויים, שבילי דריכה, ניקוי אזורים קיימים או התאמות השקיה. כך הגינה מקבלת מראה שלם ולא רק התקנה נקודתית.",
+      },
+    ],
+  },
+  "garden-maintenance-nahariya": {
+    key: "garden-maintenance-nahariya",
+    path: "/garden-maintenance-nahariya",
+    eyebrow: "עמוד מידע מקומי",
+    h1: "תחזוקת גינות בנהריה, השקיה וגיזום",
+    intro:
+      "שירותי תחזוקת גינות בנהריה מתאימים למי שרוצה לשמור על גינה מטופחת, נקייה ומתפקדת לאורך זמן בלי להמתין עד שהשטח יוצא משליטה.",
+    secondaryIntro:
+      "השירות כולל טיפול בהשקיה, גיזום, ניקוי עשבייה, סידור שטח ושמירה על מראה מסודר לבתים פרטיים, בניינים ושטחים משותפים.",
+    sections: [
+      {
+        title: "תחזוקה שוטפת לפי קצב הגינה",
+        body:
+          "יש גינות שצריכות תחזוקה שוטפת, ויש מקומות שדורשים התערבות נקודתית אחרי תקופה ארוכה. העבודה מותאמת למצב הקיים ולסוג השימוש בגינה.",
+      },
+      {
+        title: "מערכות השקיה ותיקונים",
+        body:
+          "בדיקה ותיקון של השקיה הם חלק חשוב מתחזוקה נכונה. מערכת שלא עובדת טוב גורמת לבזבוז מים, לפגיעה בצמחייה ולמראה לא אחיד של הגינה.",
+      },
+      {
+        title: "גיזום, ניקיון ושיפור מראה",
+        body:
+          "גיזום נכון, פינוי עשבייה וסידור כללי של השטח יוצרים תחושה מטופחת יותר ומשפרים את השימוש היום־יומי בגינה, גם בלי להיכנס לשיפוץ מלא.",
+      },
+    ],
+  },
+  "ganan-north": {
+    key: "ganan-north",
+    path: "/ganan-north",
+    eyebrow: "עמוד אזורי",
+    h1: "גנן בצפון לעבודות גינון ודשא סינטטי",
+    intro:
+      "מחפשים גנן בצפון? ירין אדלר גינון מבצע עבודות גינון, דשא סינטטי, השקיה, גיזום ותחזוקת גינות בעיקר באזור הצפון, עם דגש חזק על נהריה והסביבה.",
+    secondaryIntro:
+      "השירות ניתן בעיקר בנהריה, עכו, הקריות, שלומי, מעלות והסביבה, ובמידת הצורך גם באזורים נוספים בכל הארץ.",
+    sections: [
+      {
+        title: "עבודות גינון בצפון בלי לאבד מיקוד מקומי",
+        body:
+          "לא כל מי שמחפש גנן בצפון צריך פתרון רחב מדי. היתרון כאן הוא פעילות עיקרית בצפון עם דגש על נהריה והסביבה, כך שהשירות נשאר זמין, ישיר ומעשי, ועדיין אפשר לתת מענה גם לעוד אזורים בארץ כשצריך.",
+      },
+      {
+        title: "דשא סינטטי, השקיה ותחזוקה",
+        body:
+          "השירות כולל התקנת דשא סינטטי בצפון, תחזוקת גינות, תיקוני השקיה, גיזום ושדרוג אזורים קיימים, לפי צורך נקודתי או פרויקט רחב יותר.",
+      },
+      {
+        title: "אילו אזורים מקבלים שירות",
+        body:
+          "נהריה היא מוקד הפעילות העיקרי, ובנוסף ניתנים שירותים בעכו, בקריות, שלומי, מעלות ובאזורים קרובים נוספים לפי סוג העבודה והיקף הפרויקט.",
+      },
+    ],
+  },
+};
+
+function normalizePath(pathname: string) {
+  const normalized = pathname.replace(/\/+$/, "");
+  return normalized === "" ? "/" : normalized;
+}
+
+function getPageContent(pathname: string): PageContent {
+  const normalized = normalizePath(pathname);
+  return (
+    Object.values(PAGE_CONTENT).find((page) => page.path === normalized) ?? PAGE_CONTENT.home
+  );
+}
 
 function Icon({ name }: { name: IconName }) {
   const common = {
@@ -248,7 +513,7 @@ function Lightbox({
   return (
     <div className="lightbox" onClick={onClose} role="dialog" aria-modal="true">
       <div className="lightboxCard" onClick={(event) => event.stopPropagation()}>
-        <img src={item.src} alt={item.title} />
+        <img src={item.src} alt={item.alt} />
         <div className="lightboxBar">
           <div>
             <b>{item.title}</b>
@@ -277,6 +542,8 @@ export default function LandingPageYarin() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [activeIntent, setActiveIntent] = useState(INTENTS[0].id);
 
+  const page = getPageContent(window.location.pathname);
+  const isHomePage = page.key === "home";
   const filteredGallery =
     cat === "הכל" ? GALLERY_ITEMS : GALLERY_ITEMS.filter((item) => item.cat === cat);
 
@@ -286,6 +553,10 @@ export default function LandingPageYarin() {
       document.body.style.overflow = "";
     };
   }, [mobileNavOpen]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [page.key]);
 
   function go(id: string) {
     setMobileNavOpen(false);
@@ -335,35 +606,38 @@ export default function LandingPageYarin() {
 
       <div className="topStrip">
         <div className="container topStripInner">
-          <span>עבודות אמיתיות ברקע, וואטסאפ זמין בלחיצה</span>
+          <span>גנן בנהריה, דשא סינטטי, השקיה ותחזוקת גינות עם מענה מהיר</span>
           <a href={`tel:${PHONE_INT}`}>{PHONE_LOCAL}</a>
         </div>
       </div>
 
       <header className="header">
         <div className="container headerInner">
-          <a
-            className="brand"
-            href="#top"
-            onClick={(event) => {
-              event.preventDefault();
-              go("top");
-            }}
-          >
-            <img className="brandLogo" src={LOGO_PATH} alt="ירין אדלר גינון" />
+          <a className="brand" href="/">
+            <img className="brandLogo" src={LOGO_PATH} alt="לוגו ירין אדלר גינון" />
             <div className="brandText">
               <b>ירין אדלר גינון</b>
-              <span>עבודות, דשא סינטטי ויצירת קשר מהירה</span>
+              <span>גינון, דשא סינטטי ותחזוקת גינות בעיקר בצפון וגם בכל הארץ</span>
             </div>
           </a>
 
           <nav className="nav desktopNav" aria-label="ניווט ראשי">
+            {!isHomePage && (
+              <a className="navLink navLinkAnchor" href="/">
+                לעמוד הבית
+              </a>
+            )}
             <button className="navLink" type="button" onClick={() => go("gallery")}>
               עבודות
             </button>
             <button className="navLink" type="button" onClick={() => go("contact")}>
               יצירת קשר
             </button>
+            {isHomePage && (
+              <a className="navLink navLinkAnchor" href="/ganan-north">
+                גנן בצפון
+              </a>
+            )}
             <a className="btn btnPrimary" href={WHATSAPP} target="_blank" rel="noreferrer">
               <Icon name="whatsapp" /> שלח הודעה
             </a>
@@ -401,12 +675,22 @@ export default function LandingPageYarin() {
               </div>
 
               <div className="mobileNavList">
+                {!isHomePage && (
+                  <a className="mobileNavItem" href="/">
+                    לעמוד הבית
+                  </a>
+                )}
                 <button className="mobileNavItem" type="button" onClick={() => go("gallery")}>
                   עבודות
                 </button>
                 <button className="mobileNavItem" type="button" onClick={() => go("contact")}>
                   יצירת קשר
                 </button>
+                {isHomePage && (
+                  <a className="mobileNavItem" href="/ganan-north">
+                    גנן בצפון
+                  </a>
+                )}
                 <a
                   className="mobileNavItem"
                   href={SOCIALS.instagram}
@@ -443,6 +727,38 @@ export default function LandingPageYarin() {
           <div className="container heroInner">
             <div className="heroLayout">
               <Reveal className="heroStart">
+                <div className="heroLeadCard">
+                  <span className="heroBadge">{page.eyebrow}</span>
+                  <h1 className="h1">{page.h1}</h1>
+                  <p className="sub">{page.intro}</p>
+                  <p className="sub heroSubSecondary">{page.secondaryIntro}</p>
+
+                  <div className="heroActionRow">
+                    <a
+                      className="btn btnPrimary"
+                      href={WHATSAPP}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Icon name="whatsapp" /> הצעת מחיר בוואטסאפ
+                    </a>
+                    <button className="btn btnGhost" type="button" onClick={() => go("gallery")}>
+                      <Icon name="camera" /> עבודות אחרונות
+                    </button>
+                    <a className="btn btnGhost" href={`tel:${PHONE_INT}`}>
+                      <Icon name="phone" /> התקשר
+                    </a>
+                  </div>
+
+                  <div className="heroQuickLinks" aria-label="קישורים פנימיים">
+                    {INTERNAL_LINKS.map((link) => (
+                      <a key={link.href} className="heroQuickLink" href={link.href}>
+                        {link.label}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
                 <div className="heroStartGallery">
                   {GALLERY_ITEMS.map((item, index) => (
                     <button
@@ -451,23 +767,12 @@ export default function LandingPageYarin() {
                       className={`heroStartTile ${index === 0 ? "heroStartTileLarge" : ""}`}
                       onClick={() => setLightbox({ open: true, item })}
                       style={{ backgroundImage: `url(${item.src})` }}
+                      aria-label={item.alt}
                     >
                       <span className="heroMiniTileOverlay" aria-hidden />
                       <span className="heroMiniTileLabel">{item.title}</span>
                     </button>
                   ))}
-                </div>
-
-                <div className="heroActionRow heroActionRowTight">
-                  <a className="btn btnPrimary" href={WHATSAPP} target="_blank" rel="noreferrer">
-                    <Icon name="whatsapp" /> וואטסאפ
-                  </a>
-                  <button className="btn btnGhost" type="button" onClick={() => go("gallery")}>
-                    <Icon name="camera" /> עבודות
-                  </button>
-                  <a className="btn btnGhost" href={`tel:${PHONE_INT}`}>
-                    <Icon name="phone" /> התקשר
-                  </a>
                 </div>
               </Reveal>
 
@@ -534,13 +839,53 @@ export default function LandingPageYarin() {
           </div>
         </section>
 
+        <section className="section seoSection">
+          <div className="container">
+            <div className="seoGrid">
+              {page.sections.map((section, index) => (
+                <Reveal key={section.title} className={index > 0 ? "delay1" : ""}>
+                  <article className="seoCard">
+                    <h2 className="seoH2">{section.title}</h2>
+                    <p className="seoText">{section.body}</p>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section serviceAreaSection">
+          <div className="container">
+            <Reveal>
+              <div className="serviceAreaCard">
+                <div>
+                  <div className="eyebrow">אזורי שירות</div>
+                  <h2 className="h2">בעיקר בצפון, עם הגעה גם לכל הארץ</h2>
+                  <p className="sub serviceAreaSub">
+                    השירות מתאים למי שמחפש גינון בנהריה, עבודות גינון בצפון, התקנת דשא
+                    סינטטי בצפון או תחזוקת גינות באזור נהריה, הגליל המערבי והצפון, עם
+                    אפשרות להגיע גם לאזורים נוספים בארץ לפי סוג העבודה.
+                  </p>
+                </div>
+                <div className="servicesInline">
+                  <span className="serviceChip">גנן בנהריה</span>
+                  <span className="serviceChip">גינון בנהריה</span>
+                  <span className="serviceChip">דשא סינטטי בנהריה</span>
+                  <span className="serviceChip">השקיה ותחזוקה</span>
+                  <span className="serviceChip">גנן בצפון</span>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
         <section className="section gallerySection" id="gallery">
           <div className="container">
             <Reveal>
               <div className="sectionTitleCompact">
                 <div>
                   <div className="eyebrow">עבודות</div>
-                  <h2 className="h2">העבודות שלנו</h2>
+                  <h2 className="h2">עבודות גינון, דשא סינטטי ושדרוג גינות</h2>
                 </div>
                 <a className="miniLink" href={WHATSAPP} target="_blank" rel="noreferrer">
                   שלח הודעה <Icon name="arrow" />
@@ -561,7 +906,11 @@ export default function LandingPageYarin() {
               ))}
             </div>
 
-            <div className="gallery galleryFeatured">
+            <div
+              className={`gallery galleryFeatured ${
+                cat === "הכל" ? "galleryFeaturedAll" : "galleryFeaturedFiltered"
+              }`}
+            >
               {filteredGallery.map((item, index) => (
                 <Reveal key={`${item.title}-${index}`} className={index > 1 ? "delay1" : ""}>
                   <button
@@ -569,7 +918,7 @@ export default function LandingPageYarin() {
                     className={`tile ${index === 0 ? "tileLarge" : ""}`}
                     onClick={() => setLightbox({ open: true, item })}
                   >
-                    <img className="tileImg" src={item.src} alt={item.title} loading="lazy" />
+                    <img className="tileImg" src={item.src} alt={item.alt} loading="lazy" />
                     <span className="tileOverlay" aria-hidden />
                     <span className="tileMeta">
                       <small>{item.tag}</small>
@@ -582,15 +931,64 @@ export default function LandingPageYarin() {
           </div>
         </section>
 
+        <section className="section internalLinksSection">
+          <div className="container">
+            <Reveal>
+              <div className="internalLinksCard">
+                <div>
+                  <div className="eyebrow">עמודי מידע</div>
+                  <h2 className="h2">מידע נוסף על שירותי גינון ודשא סינטטי</h2>
+                  <p className="sub internalLinksSub">
+                    עמודי המידע האלו עוזרים להבין איזה שירות מתאים לכם ומחזקים את הקישור
+                    הפנימי בין תחומי הפעילות העיקריים.
+                  </p>
+                </div>
+                <div className="internalLinksGrid">
+                  {INTERNAL_LINKS.map((link) => (
+                    <a key={link.href} className="internalLinkItem" href={link.href}>
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {isHomePage && (
+          <section className="section faqSection" id="faq">
+            <div className="container">
+              <Reveal>
+                <div className="faqHeader">
+                  <div className="eyebrow">שאלות נפוצות</div>
+                  <h2 className="h2">FAQ על גינון בנהריה, דשא סינטטי ותחזוקה</h2>
+                </div>
+              </Reveal>
+
+              <div className="faqGrid">
+                {FAQ_ITEMS.map((item, index) => (
+                  <Reveal key={item.question} className={index > 1 ? "delay1" : ""}>
+                    <article className="faqCard">
+                      <h3 className="faqQuestion">{item.question}</h3>
+                      <p className="faqAnswer">{item.answer}</p>
+                    </article>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         <section className="section servicesSection">
           <div className="container">
             <Reveal>
               <div className="servicesInline">
-                {SERVICE_LABELS.map((service) => (
-                  <span key={service} className="serviceChip">
-                    {service}
-                  </span>
-                ))}
+                <span className="serviceChip">דשא סינטטי</span>
+                <span className="serviceChip">השקיה</span>
+                <span className="serviceChip">תחזוקת גינות</span>
+                <span className="serviceChip">גיזום</span>
+                <span className="serviceChip">חיפויים</span>
+                <span className="serviceChip">שבילי דריכה</span>
               </div>
             </Reveal>
           </div>
@@ -602,8 +1000,11 @@ export default function LandingPageYarin() {
               <div className="contactCardWide">
                 <div className="contactCardText">
                   <div className="eyebrow">יצירת קשר</div>
-                  <h2 className="h2">מוכנים לדבר?</h2>
-                  <p className="sub contactSub">שלחו תמונה של השטח או תשאירו טלפון.</p>
+                  <h2 className="h2">מוכנים לדבר על העבודה?</h2>
+                  <p className="sub contactSub">
+                    שלחו תמונה של השטח, כתבו אם מדובר בגינון, דשא סינטטי, השקיה או תחזוקת
+                    גינות, ותקבלו מענה מהיר.
+                  </p>
                 </div>
 
                 <div className="contactCardActions">
@@ -630,8 +1031,12 @@ export default function LandingPageYarin() {
 
       <footer className="footer">
         <div className="container footerInner">
-          <div>© {new Date().getFullYear()} ירין אדלר גינון • נהריה והסביבה</div>
+          <div>© {new Date().getFullYear()} ירין אדלר גינון • בעיקר בצפון, עם הגעה גם לכל הארץ</div>
           <div className="footerLinks">
+            <a href="/" aria-label="חזרה לעמוד הבית">
+              עמוד הבית
+            </a>
+            <a href="/ganan-north">גנן בצפון</a>
             <a href={WHATSAPP} target="_blank" rel="noreferrer">
               <Icon name="whatsapp" /> וואטסאפ
             </a>
