@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://thegardeneryarin.onrender.com/sitemap.xml
+Sitemap: https://www.yarinadler.com/sitemap.xml
