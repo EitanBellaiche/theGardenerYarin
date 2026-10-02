@@ -2982,6 +2982,12 @@
    institutional work the full length. */
 
 @media (max-width: 899px) {
+  /* Room under item 03 so the floating accessibility button (bottom 84px,
+     46px tall) does not sit on it when the section ends at the screen bottom. */
+  .hAbout {
+    padding-bottom: calc(128px + env(safe-area-inset-bottom));
+  }
+
   .hAboutLayout {
     grid-template-columns: minmax(0, 1fr);
   }

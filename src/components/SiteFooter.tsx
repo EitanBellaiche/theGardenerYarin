@@ -1,7 +1,7 @@
 import Icon from "./Icon";
 import {
   BRAND,
-  MORE_PAGES,
+  FOOTER_MORE_PAGES,
   PHONE_INT,
   PHONE_LOCAL,
   SERVICES,
@@ -38,7 +38,7 @@ export default function SiteFooter({ currentPath }: { currentPath: string }) {
         <nav className="footerCol" aria-label="עוד באתר">
           <p className="footerLabel">עוד באתר</p>
           <ul>
-            {MORE_PAGES.map((link) => (
+            {FOOTER_MORE_PAGES.map((link) => (
               <li key={link.href}>
                 <a href={link.href} aria-current={current(link.href)}>
                   {link.label}

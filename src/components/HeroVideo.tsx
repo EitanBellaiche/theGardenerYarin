@@ -69,6 +69,8 @@ export default function HeroVideo() {
     setAttempt((current) => current + 1);
   }
 
+  // `hydrated` is a dependency because the <video> mounts only in the render
+  // after hydration; without it this never runs when nothing else changes then.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -78,7 +80,7 @@ export default function HeroVideo() {
     video.play()?.catch(() => {
       // Autoplay refused (e.g. Low Power Mode). The poster stays visible.
     });
-  }, [showVideo, attempt, isSmall]);
+  }, [hydrated, showVideo, attempt, isSmall]);
 
   return (
     <div className="heroMedia" aria-hidden>
