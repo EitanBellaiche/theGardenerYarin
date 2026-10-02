@@ -71,15 +71,47 @@ export default function HeroVideo() {
 
   // `hydrated` is a dependency because the <video> mounts only in the render
   // after hydration; without it this never runs when nothing else changes then.
+  // The video exists only when motion is allowed, so none of this runs for
+  // reduced-motion, stop-animations or data-saver visitors.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    // React does not reflect `muted` as an attribute; mobile Safari needs the
-    // property set before play() for autoplay to be allowed.
-    video.muted = true;
-    video.play()?.catch(() => {
-      // Autoplay refused (e.g. Low Power Mode). The poster stays visible.
-    });
+    let pending = false;
+
+    // A refused play() is not a source failure: the poster stays, and playback
+    // is tried again once the video can play or the page is shown again.
+    // Source failures are handled by the error handlers below.
+    function tryPlay() {
+      if (!video || !video.paused || pending || document.visibilityState !== "visible") return;
+      // React does not reflect `muted` as an attribute; mobile Safari needs the
+      // property set before play() for autoplay to be allowed.
+      video.muted = true;
+      const result = video.play();
+      if (!result) return;
+      pending = true;
+      result
+        .catch(() => {
+          // Refused (e.g. not ready yet, page hidden, Low Power Mode). The poster stays visible.
+        })
+        .finally(() => {
+          pending = false;
+        });
+    }
+
+    function onVisibilityChange() {
+      if (document.visibilityState === "visible") tryPlay();
+    }
+
+    tryPlay();
+    video.addEventListener("canplay", tryPlay);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    // Restored from the back/forward cache.
+    window.addEventListener("pageshow", tryPlay);
+    return () => {
+      video.removeEventListener("canplay", tryPlay);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      window.removeEventListener("pageshow", tryPlay);
+    };
   }, [hydrated, showVideo, attempt, isSmall]);
 
   return (
