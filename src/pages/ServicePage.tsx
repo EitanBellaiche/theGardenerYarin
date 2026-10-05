@@ -1,4 +1,5 @@
 import Icon from "../components/Icon";
+import ProjectsSection from "../components/ProjectsSection";
 import Reveal from "../components/Reveal";
 import WorkImage from "../components/WorkImage";
 import {
@@ -161,6 +162,9 @@ export default function ServicePage({
           </ul>
         </section>
       )}
+
+      {/* ------------------------------------- Projects (same as home) */}
+      <ProjectsSection onOpenPhoto={onOpenPhoto} />
 
       {/* ------------------------------ Institutional: maintenance + why */}
       {isInstitutional && (
