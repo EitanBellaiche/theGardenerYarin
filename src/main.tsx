@@ -1,6 +1,9 @@
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import { installWhatsappTracking } from "./analytics";
 import "./index.css";
+
+installWhatsappTracking();
 
 const container = document.getElementById("root")!;
 const app = <App pathname={window.location.pathname} />;

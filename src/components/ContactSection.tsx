@@ -1,4 +1,5 @@
 import { type CSSProperties, type FormEvent, useState } from "react";
+import { trackWhatsappLead } from "../analytics";
 import Icon from "./Icon";
 import Reveal from "./Reveal";
 import { INTENTS, PHONE_INT, PHONE_LOCAL, type IntentItem, whatsappLink } from "../siteData";
@@ -46,6 +47,7 @@ export default function ContactSection({
       .join("\n");
 
     window.open(whatsappLink(text), "_blank", "noreferrer");
+    trackWhatsappLead();
   }
 
   return (
