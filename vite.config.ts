@@ -1,6 +1,34 @@
 import { resolve } from "node:path";
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
+
+const GOOGLE_TAG_ID = "AW-18493632131";
+
+// Google tag (gtag.js), added to the <head> of every built HTML page. Build-only,
+// so local dev doesn't send hits.
+function googleTag(): Plugin {
+  return {
+    name: "google-tag",
+    apply: "build",
+    transformIndexHtml: () => [
+      {
+        tag: "script",
+        attrs: { async: true, src: `https://www.googletagmanager.com/gtag/js?id=${GOOGLE_TAG_ID}` },
+        injectTo: "head",
+      },
+      {
+        tag: "script",
+        children: `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '${GOOGLE_TAG_ID}');
+    `,
+        injectTo: "head",
+      },
+    ],
+  };
+}
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -8,6 +36,7 @@ export default defineConfig({
   // dev/preview in line with Cloudflare Pages, which serves 404.html with HTTP 404.
   appType: "mpa",
   plugins: [
+    googleTag(),
     react({
       babel: {
         plugins: [["babel-plugin-react-compiler"]],
